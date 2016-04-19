@@ -13,7 +13,6 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-
                     	{{#link-to "index"}}<i class="fa fa-home"></i> Accueil{{/link-to}}
                     </li>
                     <li class="dropdown yamm-fw">
@@ -52,50 +51,31 @@
                                             </ul>
                                         </div>
                                         <div class="col-sm-3">
-                                            <img src="http://1.1.1.5/bmi/bootstraplovers.com/templates/assan-2.2/e-commerce/images/women/10.jpg" class="img-responsive" alt="">
+                                            <img src="images/hamburger.jpg" class="img-responsive" alt="">
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    <li class=""><a href="index.html"><i class="icon fa fa-plus"></i> Ajouter</a></li>
+                    <li>
+                        {{#link-to "recipes.add"}}<i class="icon fa fa-plus"></i> Ajouter{{/link-to}}
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                	<li class="">{{#link-to "login"}}<i class="fa fa-user"></i> Login{{/link-to}}</li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle js-activated" data-toggle="dropdown" role="button" aria-haspopup="true"><i class="fa fa-user"></i> <span class="badge">5</span></a>
-                        <div class="dropdown-menu shopping-cart">
-                            <div class="cart-items content-scroll">
-                                <div class="cart-item clearfix">
-                                    <div class="img">
-                                        <img src="http://1.1.1.3/bmi/bootstraplovers.com/templates/assan-2.2/e-commerce/images/men/1.jpg" alt="" class="img-responsive">
-                                    </div>
-                                    <div class="description">
-                                        <a href="#">Mauris et ligula quis</a><strong class="price">1 x $44.9999</strong>
-                                    </div>
-                                    <div class="buttons">
-                                        <a href="#" class="fa fa-pencil"></a><a href="#" class="fa fa-trash-o"></a>
-                                    </div>
-                                </div>
-                                <div class="cart-item clearfix">
-                                    <div class="img">
-                                        <img src="http://1.1.1.1/bmi/bootstraplovers.com/templates/assan-2.2/e-commerce/images/men/4.jpg" alt="" class="img-responsive">
-                                    </div>
-                                    <div class="description">
-                                        <a href="#">Mauris et ligula quis</a><strong class="price">1 x $44.95</strong>
-                                    </div>
-                                    <div class="buttons">
-                                        <a href="#" class="fa fa-pencil"></a><a href="#" class="fa fa-trash-o"></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cart-footer">
-                                <a href="#" class="btn btn-light-dark"> View Cart</a>
-                                <a href="#" class="btn btn-skin"> Checkout</a>
-                            </div>
-                        </div>
-                    </li>
+                    {{#if authenticate.userIsLoggedIn }}
+                        <li class="dropdown {{openDropDown}}">
+                            <a href="#" class="dropdown-toggle js-activated" {{action "toggleDropDown"}} data-toggle="dropdown" role="button" aria-haspopup="true">
+                                <span style="text-transform: capitalize;">{{ authenticate.user.username }}</span> <i class="fa fa-user"></i> <span class="badge">5</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Mon compte</a></li>
+                                <li><a href="#" {{action "logout"}}>Déconnexion</a></li>
+                            </ul>
+                        </li>                    
+                    {{else}}
+                        <li class="">{{#link-to "login"}}<i class="fa fa-user"></i> Connexion{{/link-to}}</li>
+                    {{/if}}
                 </ul>
             </div>
         </div>
