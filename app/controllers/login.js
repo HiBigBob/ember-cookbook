@@ -11,12 +11,12 @@ export default Ember.Controller.extend({
         var credentials = this.getProperties('identification', 'password');
         this.get('authenticate').authenticate(credentials).then(function(){
         	_this.setProperties({ identification: '', password: '' });
-			if (previousTransition) {
-				_this.set('previousTransition', null);
-				previousTransition.retry();
-			} else {
-				_this.transitionToRoute('index');
-			}
+    			if (previousTransition) {
+    				_this.set('previousTransition', null);
+    				previousTransition.retry();
+    			} else {
+    				_this.transitionToRoute('index');
+    			}
         }).catch((message) => {
             this.set('errorMessage', message);
         });
