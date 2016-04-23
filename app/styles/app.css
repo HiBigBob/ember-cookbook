@@ -1264,12 +1264,15 @@ del {
 }
 .cart-ingredient > tbody > tr > td {
   vertical-align: middle;
-  padding-left:10px;
   font-size: 15px;
   color: #57B984;
 }
+.cart-ingredient > tbody > tr > td a {
+  float: right;
+  margin-right: 50px;
+}
 .cart-ingredient > tbody > tr {
-  height: 30px;
+  height: 50px;
 }
 
 .coupon-row {
