@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-sm-3 col-xs-12">
+    	{{#link-to "recipes.add.type" }}
+	        <h3 class="bg-title">
+					{{#if type }}
+						<span>Type</span>
+					{{else}}
+						Type
+					{{/if}}
+	        </h3>
+        {{/link-to}}
+    </div>
+    <div class="col-sm-3 col-xs-12">
+    	{{#link-to "recipes.add.element" }}
+	        <h3 class="bg-title">
+	        	{{#if ingredient }}
+					<span>Ingrédients</span>
+				{{else}}
+					Ingrédients
+				{{/if}}
+	        </h3>
+        {{/link-to}}
+    </div>
+    <div class="col-sm-3 col-xs-12">
+    	{{#link-to "recipes.add.quantity" }}
+	        <h3 class="bg-title">
+				{{#if quantity }}
+					<span>Quantitées</span>
+				{{else}}
+					Quantitées
+				{{/if}}
+	        </h3>
+	    {{/link-to}}
+    </div>
+    <div class="col-sm-3 col-xs-12">
+		{{#link-to "recipes.add.detail" }}
+	        <h3 class="bg-title">
+				{{#if detail }}
+					<span>Détails</span>
+				{{else}}
+					Détails
+				{{/if}}        	
+	        </h3>
+	    {{/link-to}}	        
+    </div>
+</div>
