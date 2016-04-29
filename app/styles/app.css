@@ -1650,12 +1650,12 @@ del {
   overflow: hidden;
   margin-bottom: 30px;
   position: relative;
-  min-height:120px;
+  min-height:90px;
 }
 .blocks-main .blocks-col .block-overlay {
   position: absolute;
   left: 12%;
-  bottom: 30px;
+  bottom: 20px;
   margin: 0 auto;
   text-align: center;
   padding: 5px 15px;
@@ -1770,4 +1770,11 @@ del {
 
 .main-container {
   margin-top: 62px; 
+}
+
+.ember-radio-button{
+  padding-right: 15px;
+}
+.margin-right-5{
+  margin-right: 5px!important;
 }
