@@ -9,6 +9,10 @@ Router.map(function() {
   this.route('index', { path: '/' });
   this.route('login');
   this.route('register');
+
+  this.route('recipes', function() {
+  	this.route('add');
+  });
 });
 
 export default Router;
