@@ -148,7 +148,7 @@ del {
   transition: all 0.3s;
 }
 .btn i {
-  margin-left: 8px;
+  /*margin-left: 8px;*/
 }
 
 .btn-3d {
@@ -1280,10 +1280,10 @@ del {
   width: 50%;
 }
 .cart-element.search-element > tbody > tr > td:nth-child(2) {
-  width: 25%;
+  width: 35%;
 }
 .cart-element.search-element > tbody > tr > td:nth-child(3) {
-  width: 20%;
+  width: 10%;
 }
 
 .cart-element > tbody > tr > td a {
@@ -1721,6 +1721,7 @@ del {
   border: 1px solid #ccc; 
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(87, 185, 132, 0.1);
   outline:none;
+  background-color: #fff;
 }
 
 [contenteditable="true"]:active,
@@ -1736,6 +1737,15 @@ del {
     padding: 10px 0px 1px;
     max-width: 100%;
     overflow-x: visible;
+}
+
+.content-block .search {
+    min-height: 135px;
+}
+
+.content-block .list-element,
+.content-block .short-view {
+    min-height: 228px;
 }
 
 .content-block .block-header {
