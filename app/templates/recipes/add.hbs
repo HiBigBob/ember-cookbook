@@ -121,59 +121,82 @@
 		</div>
 	</div>
 	<div class="row">
+        <div class="col-sm-12">
+			<div class="content-block">
+				<div class="block search">
+			      <div class="block-header">
+			         <h3 class="block-title">Recherche par nom d'ingrédients</h3>
+			      </div>
+			      <div class="block-content form-horizontal row">
+			      		<div class="col-sm-6">
+				         	<div class="row form-group">
+								<label for="inputEmail3" class="col-sm-3 control-label">Recherche</label>
+								<div class="col-sm-9">
+								    {{input name="query" value=query class="form-control" placeholder="Rechercher par nom"}}
+								</div>
+							</div>	
+						</div>
+						<div class="col-sm-6">
+				         	<div class="row form-group">
+								<label class="col-sm-3 control-label">Résultat</label>
+								<div class="col-sm-9">
+									{{#if results.length}}
+										<div class="table-responsive">
+											<table class="table table-condensed cart-element search-element">
+											    <tbody>
+											        {{#each results as |element|}}
+												        <tr>
+												            <td>
+												            	{{element.name}}
+												            </td>
+												            <td>
+												            	{{input name="query" value=quantity class="form-control input-sm" placeholder="Mesure"}}
+												            </td>
+												            <td>
+												            	{{element.measure.short_name}}
+												            </td>
+												            <td>
+												            	<a href="#" class="btn btn-skin" {{action "addElement" element}}>Ajouter
+												            	</a>
+												            </td>
+												        </tr>
+												    {{else}}
+												    	<tr>
+												            <td>
+												            	No results    
+												            </td>
+												            <td>
+												            </td>
+												        </tr>
+													{{/each}}
+											    </tbody>
+											</table>
+										</div>
+									{{else}}
+										<div style="margin-left:5px; margin-top:5px;">
+											No results		
+										</div>
+									{{/if}}
+								</div>
+							</div>
+						</div>
+			      </div>
+			   </div>
+			</div>	
+        </div>
+	</div>
+	<div class="row">
         <div class="col-sm-6">
 			<div class="content-block">
 				<div class="block">
 			      <div class="block-header">
-			         <h3 class="block-title">Recherche</h3>
+			         <h3 class="block-title">Coller la liste des ingrédients</h3>
 			      </div>
 			      <div class="block-content form-horizontal">
-			         	<div class="row form-group">
-							<label for="inputEmail3" class="col-sm-3 control-label">Recherche</label>
-							<div class="col-sm-9">
-							    {{input name="query" value=query class="form-control" placeholder="Search for anything..."}}
-							</div>
-						</div>	
 						<div class="row form-group">
-							<label class="col-sm-3 control-label">Résultat</label>
+							<label for="inputEmail3" class="col-sm-3 control-label">Ingrédients</label>
 							<div class="col-sm-9">
-								{{#if results.length}}
-									<div class="table-responsive">
-										<table class="table table-condensed cart-element search-element">
-										    <tbody>
-										        {{#each results as |element|}}
-											        <tr>
-											            <td>
-											            	{{element.name}}
-											            </td>
-											            <td>
-											            	{{input name="query" value=quantity class="form-control input-sm" placeholder="Mesure"}}
-											            </td>
-											            <td>
-											            	{{element.measure.short_name}}
-											            </td>
-											            <td>
-											            	<a href="#" class="btn btn-skin" {{action "addElement" element}}>Ajouter
-											            	</a>
-											            </td>
-											        </tr>
-											    {{else}}
-											    	<tr>
-											            <td>
-											            	No results    
-											            </td>
-											            <td>
-											            </td>
-											        </tr>
-												{{/each}}
-										    </tbody>
-										</table>
-									</div>
-								{{else}}
-									<div style="margin-left:5px; margin-top:5px;">
-										No results		
-									</div>
-								{{/if}}
+							    {{textarea rows="7" name="paste" value=paste class="form-control" focus-out="pasteElement"}}
 							</div>
 						</div>				
 			      </div>
@@ -182,35 +205,22 @@
         </div>
         <div class="col-sm-6">
 			<div class="content-block">
-				<div class="block">
-			      <div class="block-header">
-			         <h3 class="block-title">Liste des ingrédients</h3>
-			      </div>
-			      <div class="block-content">
+				<div class="block list-element">
+			      	<div class="block-header">
+			        	<h3 class="block-title">Liste des ingrédients</h3>
+			      	</div>
+			      	<div class="block-content">
 			         	<table class="table table-striped table-vcenter">
 			               <thead>
-			                  <tr>
-			                     <th>Nom</th>
-			                     <th style="width: 30%;">Quantité</th>
-			                     <th style="width: 15%;">Mesure</th>
-			                     <th class="text-center" style="width: 100px;">Actions</th>
-			                  </tr>
+			                  	<tr>
+			                     	<th>Nom</th>
+			                     	<th style="width: 30%;">Quantité</th>
+			                     	<th style="width: 15%;">Mesure</th>
+			                     	<th class="text-center" style="width: 100px;">Actions</th>
+			                  	</tr>
 			               </thead>
 			               <tbody>
-			                  {{#each recipe.recipe.element as |element|}}
-{{!-- 									<tr>
-										<td class="font-w600">{{element.name}}</td>
-										<td>{{element.quantity}}</td>
-										<td>
-											<span class="label label-danger">{{element.measure.name}}</span>
-										</td>
-										<td class="text-center">
-											<div class="btn-group">
-											   	<button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-			                           			<button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-											</div>
-										</td>
-									</tr> --}}
+			                  	{{#each recipe.recipe.element as |element|}}
 									{{display-element 
 										item=element
 										onRemove=(action "removeElement" element.id)
@@ -218,63 +228,47 @@
 								{{/each}}        
 			               </tbody>
 			            </table>			
-			      </div>
+			      	</div>
 			   </div>
-			</div>	
-			
-        </div>
+        	</div>
+		</div>	
 	</div>
 	<div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
 			<div class="content-block">
 				<div class="block">
 			      <div class="block-header">
-			         <h3 class="block-title">Type</h3>
+			         <h3 class="block-title">Description</h3>
 			      </div>
-			      <div class="block-content">
-			         	<div class="row blocks-main">
-					        <div class="col-sm-3">
-								{{recipe-add-type 
-					            	type="Apéro" 
-					            	value="apero"
-					            	active=recipe.recipe.type
-					            	onClick=(action "updateType")
-					            	detail="croissants chèvres ..." 
-					            	img="https://i.ytimg.com/vi/K4jPqm1oclw/maxresdefault.jpg"}}
-					        </div>
-					        <div class="col-sm-3">
-					            {{recipe-add-type 
-					            	type="Entrée" 
-					            	value="entree"
-					            	active=recipe.recipe.type
-					            	onClick=(action "updateType")
-					            	detail="Terrine de légumes ..." 
-					            	img="https://s-media-cache-ak0.pinimg.com/736x/d1/f6/29/d1f62942e67596d90c3be5f95bdfcd13.jpg"}}
-					        </div>
-					        <div class="col-sm-3">
-					            {{recipe-add-type 
-					            	type="Plat" 
-					            	value="plat"
-					            	active=recipe.recipe.type
-					            	onClick=(action "updateType")
-					            	detail="Viandes, poissons ..." 
-					            	img="https://s-media-cache-ak0.pinimg.com/736x/d1/f6/29/d1f62942e67596d90c3be5f95bdfcd13.jpg"}}
-					        </div>     
-					        <div class="col-sm-3">
-					            {{recipe-add-type 
-					            	type="Desserts" 
-					            	value="desserts"
-					            	active=recipe.recipe.type
-					            	onClick=(action "updateType")
-					            	detail="Gâteaux, donuts ..." 
-					            	img="https://s-media-cache-ak0.pinimg.com/736x/d1/f6/29/d1f62942e67596d90c3be5f95bdfcd13.jpg"}}
-					        </div>                            
-						</div>
+			      <div class="block-content form-horizontal">
+						<div class="row form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label">Description</label>
+							<div class="col-sm-9">
+							    {{textarea rows="7" name="description" value=description class="form-control" focus-out="pasteElement"}}
+							</div>
+						</div>				
 			      </div>
 			   </div>
-			</div>
+			</div>	
+        </div>
+        <div class="col-sm-6">
+			<div class="content-block">
+				<div class="block short-view">
+			      	<div class="block-header">
+			        	<h3 class="block-title">Aperçu</h3>
+			      	</div>
+			      	<div class="block-content">
+						<div class="row form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label">Description</label>
+							<div class="col-sm-9">
+							    {{mark-down description}}
+							</div>
+						</div>						
+			      	</div>
+			   </div>
+        	</div>
 		</div>
-	</div>	
-	<a href="#" class="btn btn-skin pull-right" {{action "addElement" element}}>Ajouter</a>
+	</div>
+	<a href="#" class="btn btn-classic btn-skin pull-right" {{action "addElement" element}}>Ajouter cette recette</a>
 </div>
 
