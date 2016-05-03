@@ -1,32 +1,46 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-	recipe: {
+	store: Ember.inject.service(),
+	object: {
 		name: '',
 		done: '',
 		minute: '',
 		degree: '',
 		score: '', 
 		type: '',
+		description: '',
 		element: []
 	},
 
 	clear() {
-		this.set('recipe', {});
+		this.set('object', {});
 	},
 
 	setType(recipe) {
-		console.log(this.get('recipe'));
-		this.set('recipe.type', recipe);
+		this.set('object.type', recipe);
 	},
 
 	setElement(recipe) {
-		this.get('recipe.element').pushObject(recipe);
-		console.log(this.get('recipe.element'));
+		this.get('object.element').pushObject(recipe);
 	},
 
 	removeElementById(id) {
-		let element = this.get('recipe.element').findBy("id", id);
-		this.get('recipe.element').removeObject(element);
+		let element = this.get('object.element').findBy("id", id);
+		this.get('object.element').removeObject(element);
+	},
+
+	submit() {
+      	let recipe = this.get('store').createRecord('recipe', this.get('object'));
+
+      	var self = this;
+		function transitionToList() {
+		  self.transitionToRoute('index');
+		}
+		function failure(reason) {
+		  console.log(reason);
+		}
+
+		recipe.save().then(transitionToList).catch(failure);
 	}
 });

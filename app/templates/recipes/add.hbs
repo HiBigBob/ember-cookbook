@@ -1,6 +1,6 @@
 <div class="breadcrumb-wrapper">
     <div class="container">
-        <h1><i class="fa fa-cutlery" aria-hidden="true"></i>&nbsp;&nbsp;Ajouter une recette</h1>
+        <h1><i class="fa fa-cutlery" aria-hidden="true"></i>Ajouter une recette</h1>
     </div>
 </div>
 <div class="container padding-30 container-height ">
@@ -15,7 +15,7 @@
 						<div class="row form-group">
 							<label for="inputEmail3" class="col-sm-3 control-label">Nom</label>
 							<div class="col-sm-9">
-							{{input value=recipe.recipe.name class="form-control"}}
+							{{input value=recipe.object.name class="form-control"}}
 							</div>
 						</div>	
 						<div class="row form-group">
@@ -23,13 +23,13 @@
 							<div class="col-sm-9">
 								{{#radio-button
 								    value="true"
-								    groupValue=recipe.recipe.done
+								    groupValue=recipe.object.done
 								    radioClass="radio-inline margin-right-5"}}
 								    Yes
 								{{/radio-button}}
 								{{#radio-button
 								    value="false"
-								    groupValue=recipe.recipe.done
+								    groupValue=recipe.object.done
 								    radioClass="radio-inline margin-right-5"}}
 								    No
 								{{/radio-button}}
@@ -39,7 +39,7 @@
 							<label for="inputEmail3" class="col-sm-3 control-label">Durée</label>
 							<div class="col-sm-9">
 								<div class="input-group">
-									{{input value=recipe.recipe.minute class="form-control"}}
+									{{input value=recipe.object.minute class="form-control"}}
 									<span class="input-group-addon">minutes</span>
 								</div>
 							</div>
@@ -48,7 +48,7 @@
 							<label for="inputEmail3" class="col-sm-3 control-label">Cuisson</label>
 							<div class="col-sm-9">
 								<div class="input-group">
-									{{input value=recipe.recipe.degree class="form-control"}}
+									{{input value=recipe.object.degree class="form-control"}}
 									<span class="input-group-addon">°C</span>
 								</div>
 							</div>
@@ -57,7 +57,7 @@
 							<label for="inputEmail3" class="col-sm-3 control-label">Note</label>
 							<div class="col-sm-9">
 								<div class="input-group">
-									{{input value=recipe.recipe.score class="form-control"}}
+									{{input value=recipe.object.score class="form-control"}}
 									<span class="input-group-addon"> / 10</span>
 								</div>
 							</div>
@@ -79,7 +79,7 @@
 								{{recipe-add-type 
 					            	type="Apéro" 
 					            	value="apero"
-					            	active=recipe.recipe.type
+					            	active=recipe.object.type
 					            	onClick=(action "updateType")
 					            	detail="croissants chèvres ..." 
 					            	img="https://i.ytimg.com/vi/K4jPqm1oclw/maxresdefault.jpg"}}
@@ -88,7 +88,7 @@
 					            {{recipe-add-type 
 					            	type="Entrée" 
 					            	value="entree"
-					            	active=recipe.recipe.type
+					            	active=recipe.object.type
 					            	onClick=(action "updateType")
 					            	detail="Terrine de légumes ..." 
 					            	img="https://s-media-cache-ak0.pinimg.com/736x/d1/f6/29/d1f62942e67596d90c3be5f95bdfcd13.jpg"}}
@@ -99,7 +99,7 @@
 					            {{recipe-add-type 
 					            	type="Plat" 
 					            	value="plat"
-					            	active=recipe.recipe.type
+					            	active=recipe.object.type
 					            	onClick=(action "updateType")
 					            	detail="Viandes, poissons ..." 
 					            	img="https://s-media-cache-ak0.pinimg.com/736x/d1/f6/29/d1f62942e67596d90c3be5f95bdfcd13.jpg"}}
@@ -108,7 +108,7 @@
 					            {{recipe-add-type 
 					            	type="Desserts" 
 					            	value="desserts"
-					            	active=recipe.recipe.type
+					            	active=recipe.object.type
 					            	onClick=(action "updateType")
 					            	detail="Gâteaux, donuts ..." 
 					            	img="https://s-media-cache-ak0.pinimg.com/736x/d1/f6/29/d1f62942e67596d90c3be5f95bdfcd13.jpg"}}
@@ -145,21 +145,10 @@
 											<table class="table table-condensed cart-element search-element">
 											    <tbody>
 											        {{#each results as |element|}}
-												        <tr>
-												            <td>
-												            	{{element.name}}
-												            </td>
-												            <td>
-												            	{{input name="query" value=quantity class="form-control input-sm" placeholder="Mesure"}}
-												            </td>
-												            <td>
-												            	{{element.measure.short_name}}
-												            </td>
-												            <td>
-												            	<a href="#" class="btn btn-skin" {{action "addElement" element}}>Ajouter
-												            	</a>
-												            </td>
-												        </tr>
+												        {{display-result-element 
+															item=element
+															add=(action "addElement")
+															}}
 												    {{else}}
 												    	<tr>
 												            <td>
@@ -220,7 +209,7 @@
 			                  	</tr>
 			               </thead>
 			               <tbody>
-			                  	{{#each recipe.recipe.element as |element|}}
+			                  	{{#each recipe.object.element as |element|}}
 									{{display-element 
 										item=element
 										onRemove=(action "removeElement" element.id)
@@ -244,7 +233,7 @@
 						<div class="row form-group">
 							<label for="inputEmail3" class="col-sm-3 control-label">Description</label>
 							<div class="col-sm-9">
-							    {{textarea rows="7" name="description" value=description class="form-control" focus-out="pasteElement"}}
+							    {{textarea rows="7" name="description" value=recipe.object.description class="form-control" focus-out="pasteElement"}}
 							</div>
 						</div>				
 			      </div>
@@ -257,11 +246,25 @@
 			      	<div class="block-header">
 			        	<h3 class="block-title">Aperçu</h3>
 			      	</div>
-			      	<div class="block-content">
+			      	<div class="block-content form-horizontal">
 						<div class="row form-group">
-							<label for="inputEmail3" class="col-sm-3 control-label">Description</label>
+							<label for="inputEmail3" class="col-sm-3 control-label">Ingrédient</label>
 							<div class="col-sm-9">
-							    {{mark-down description}}
+								<ul class="padding-8">
+							    {{#each recipe.object.element as |element|}}
+  									<li>
+  										{{ element.quantity }} 
+  										{{ element.measure.name }}
+  										{{ element.name }}
+  									</li>
+								{{/each}} 
+								</ul>
+							</div>
+						</div>						
+						<div class="row form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label">Préparation</label>
+							<div class="col-sm-9 padding-8">
+							    {{mark-down recipe.object.description}}
 							</div>
 						</div>						
 			      	</div>
@@ -269,6 +272,6 @@
         	</div>
 		</div>
 	</div>
-	<a href="#" class="btn btn-classic btn-skin pull-right" {{action "addElement" element}}>Ajouter cette recette</a>
+	<button class="btn btn-classic btn-skin pull-right" {{action "addrecipe"}}>Ajouter cette recette</button>
 </div>
 

@@ -32,20 +32,21 @@ export default Ember.Controller.extend({
 	}),
 
 	actions: {
-		addElement(element) {
+		addElement(element, quantity) {
 			this.set('query', '');
-			let props = this.getProperties(['quantity']);
-			this.setProperties({ quantity: '' });
 		    this.get('recipe').setElement({
 				id: element.get('id'),
 				name: element.get('name'),
-				quantity: props.quantity,
+				quantity: quantity,
 				measure: {
 					id: element.get('measure._id'),
 					name: element.get('measure.short_name')
 				}
 			});
 		},
+		addrecipe() {
+			this.get('recipe').submit();
+		},		
 		updateType(value) {
 		    this.get('recipe').setType(value);
 		},		
@@ -53,7 +54,7 @@ export default Ember.Controller.extend({
 			this.get('recipe').removeElementById(id);
 		},
 		pasteElement() {
-			let string = this.getProperties('paste').paste;
+			let string = this.getProperties(['paste']).paste;
 			string = string.split("\n");
 			let excludes = ['a','à', 'en', '-'];
 
@@ -140,9 +141,6 @@ export default Ember.Controller.extend({
 					}
 				});
 			}, this);			
-		},
-		submit() {
-		    this.transitionToRoute('recipes.add.detail');
 		}
 	}
 });
