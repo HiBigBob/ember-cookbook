@@ -1,0 +1,14 @@
+<td>
+	{{item.name}}
+</td>
+<td>
+	{{input name="query" value=quantity class="form-control input-sm" placeholder="Mesure"}}
+</td>
+<td>
+	{{item.measure.short_name}}
+</td>
+<td>
+	<button class="btn btn-skin" {{action "addQuantity"}}>
+		Ajouter
+	</button>
+</td>
