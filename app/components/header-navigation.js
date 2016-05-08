@@ -2,15 +2,23 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	authenticate: Ember.inject.service('authentication'),
-	openDropDown: '',
+	openDropDownUser: '',
 	router: Ember.inject.service('-routing'),
 
 	actions: {
-		toggleDropDown() {
-			if (this.get('openDropDown') === '') {
-				this.set('openDropDown', 'open');
+		toggleDropDownUser() {
+			if (this.get('openDropDownUser') === '') {
+				this.set('openDropDownUser', 'open');
 			} else {
-				this.set('openDropDown', '');
+				this.set('openDropDownUser', '');
+			}
+		},
+
+		toggleDropDownPin() {
+			if (this.get('openDropDownPin') === '') {
+				this.set('openDropDownPin', 'open');
+			} else {
+				this.set('openDropDownPin', '');
 			}
 		},
 
