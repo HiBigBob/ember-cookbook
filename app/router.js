@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('register');
 
   this.route('recipes', function() {
+  	this.route('index', { path: '/' });
   	this.route('add');
   });
 });

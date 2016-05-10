@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-md-8">
+        <ul class="recipe-filter-block list-inline clearfix">
+        	<li><i class="fa fa-search"></i></li>
+        	<li>{{input value=query class="form-control input-sm"}}</li>
+        	<li class="ml-20"><i class="fa {{if reverseSort 'fa-sort-desc' 'fa-sort-asc'}}"></i></li>
+            <li class="{{if (is-equal sortBy "date") 'active' ''}}">
+            	<a href="#" {{ action "sortByField" "date"}}>Dernier ajouté</a>
+            </li>
+            <li class="{{if (is-equal sortBy "score") 'active' ''}}">
+            	<a href="#" {{ action "sortByField" "score"}}>Meilleur note</a>
+            </li>
+        </ul>
+
+        {{#each sortedRecipes as |recipe|}}
+	        <div class="recipe-list">
+	            <div class="row">
+	                <div class="col-md-2 margin-b-20">
+	                    <div class="recipe-list-thumb type-{{ recipe.type }}">
+	                    </div>
+	                </div>
+	                <div class="col-md-10">
+	                    <div class="recipe-list-desc">
+	                    	<div class="row">
+	                    		<div class="col-md-6">
+	                    			<h3 class="title">
+	                        			<a href="#">{{ recipe.name }}</a>
+	                        		</h3>
+	                    		</div>
+	                    		<div class="col-md-6">
+			                        {{ display-rating rating=recipe.score }}
+	                    		</div>	                    		
+	                    	</div>
+	                        <div class="row">
+	                    		<div class="col-md-3">
+	                    			<span class="making avatar-preparation"> {{ recipe.minute }} minutes</span>
+	                    		</div>
+	                    		<div class="col-md-3">
+	                    			<span class="baking avatar-cuisson"> {{ recipe.degree }} ° C</span>
+	                    		</div>
+								<div class="col-md-6">
+	                    			<div class="recipe-list-desc">
+				                        <div class="icon-list">
+				                            <a href="#" class="btn btn-classic btn-skin" >
+				                            	<span class="icon-pin">
+				                            	</span>
+				                            </a>
+				                            <a href="#" class="btn btn-skin" >Voir</a>
+				                        </div>
+				                    </div>  
+	                    		</div>
+	                    	</div>
+	                    </div>
+	                </div>              
+	            </div>
+	        </div>
+        {{/each}} 
+        {{#if showPagination}}
+	        <nav>
+	            <ul class="pagination pull-right clearfix">
+	                <li>
+	                    <a href="#" aria-label="Previous">
+	                        <span aria-hidden="true">«</span>
+	                    </a>
+	                </li>
+	                <li class="active"><a href="#">1</a></li>
+	                <li><a href="#">2</a></li>
+	                <li><a href="#">3</a></li>
+	                <li><a href="#">4</a></li>
+	                <li><a href="#">5</a></li>
+	                <li>
+	                    <a href="#" aria-label="Next">
+	                        <span aria-hidden="true">»</span>
+	                    </a>
+	                </li>
+	            </ul>
+	        </nav>
+        {{/if}}
+    </div>
+
+    <div class="col-md-3 col-md-offset-1 recipe-filter-by">
+        <div class="sidebar-widget">
+            <h3>Ingrédient</h3>
+            <ul class="list-unstyled">
+            	<li><a href="#" {{ action "erasedFilterByElement"}}>Supprimer le filtre</a></li>
+                {{#each elements as |elem|}}
+                	<li class="{{if (is-equal filterByElementId elem.id) 'active' ''}}"><a href="#" {{ action "filterByElementId" elem.id}}>{{elem.name}} ({{elem.nb}}) </a></li>
+        		{{/each}} 
+            </ul>
+        </div>
+        <div class="sidebar-widget">
+            <h3>Type de recette</h3>
+            <ul class="list-unstyled">
+            	<li><a href="#" {{ action "erasedFilterByType"}}>Supprimer le filtre</a></li>
+            	{{#each types as |type|}}
+                	<li class="{{if (is-equal filterByType type.name) 'active' ''}}"><a href="#" {{ action "filterByType" type.name}}>{{type.name}} ({{type.nb}})</a></li>
+        		{{/each}}
+            </ul>
+        </div>        
+    </div>
+</div>
