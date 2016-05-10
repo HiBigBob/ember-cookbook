@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
 	store: Ember.inject.service(),
+	routing: Ember.inject.service('-routing'),
 	object: {
 		name: '',
 		done: '',
@@ -33,9 +34,9 @@ export default Ember.Service.extend({
 	submit() {
       	let recipe = this.get('store').createRecord('recipe', this.get('object'));
 
-      	var self = this;
+      	let self = this;
 		function transitionToList() {
-		  self.transitionToRoute('index');
+		  self.get("routing").transitionTo("index");
 		}
 		function failure(reason) {
 		  console.log(reason);
