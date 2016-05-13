@@ -74,39 +74,22 @@
                         </li> 
                         <li class="dropdown {{openDropDownPin}}">
                             <a href="#" class="dropdown-toggle js-activated avatar-pin" {{action "toggleDropDownPin"}} data-toggle="dropdown" role="button" aria-haspopup="true">
-                                 <span class="badge">5</span>
+                                 <span class="badge">{{bookmark.model.length}}</span>
                             </a>
                             <div class="dropdown-menu shopping-cart">
-                                <div class="cart-items content-scroll mCustomScrollbar _mCS_1 mCS_no_scrollbar"><div id="mCSB_1" class="mCustomScrollBox mCS-dark-2 mCSB_vertical mCSB_inside" tabindex="0" style="max-height: 250px;"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+                                {{#each bookmark.model as |bookmark|}}
                                     <div class="cart-item clearfix">
-                                        <div class="img">
-                                            <img src="images/men/1.jpg" alt="" class="img-responsive mCS_img_loaded">
-                                        </div><!--img-->
-                                        <div class="description">
-                                            <a href="#">Mauris et ligula quis</a><strong class="price">1 x $44.95</strong>
-                                        </div><!--Description-->
-                                        <div class="buttons">
-                                            <a href="#" class="fa fa-pencil"></a><a href="#" class="fa fa-trash-o"></a>
+                                        <div class="img xs-type-{{ bookmark._recipe.type }}">
                                         </div>
-                                    </div><!--cart item-->
-                                    <div class="cart-item clearfix">
-                                        <div class="img">
-                                            <img src="images/men/6.jpg" alt="" class="img-responsive mCS_img_loaded">
-                                        </div><!--img-->
-                                        <div class="description">
-                                            <a href="#">Mauris et ligula quis</a><strong class="price">1 x $44.95</strong>
-                                        </div><!--Description-->
-                                        <div class="buttons">
-                                            <a href="#" class="fa fa-pencil"></a><a href="#" class="fa fa-trash-o"></a>
+                                        <div class="description ml-20">
+                                            {{ bookmark._recipe.name }}
                                         </div>
-                                    </div><!--cart item-->
-                                </div><div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-dark-2 mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; top: 0px; display: block; height: 176px; max-height: 240px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div><!--cart-items-->
-
-                                <div class="cart-footer">
-                                    <a href="#" class="btn btn-light-dark"> View Cart</a>
-                                    <a href="#" class="btn btn-skin"> Checkout</a>
-                                </div><!--footer of cart-->
-
+                                        <div class="buttons">
+                                            <a href="#" class="fa fa-pencil"></a>
+                                            <a href="#" class="fa fa-times"></a>
+                                        </div>
+                                    </div>
+                                {{/each}} 
                             </div>
                         </li>                    
                     {{else}}
