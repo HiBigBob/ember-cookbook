@@ -36,7 +36,7 @@ export default Ember.Service.extend({
 
       	let self = this;
 		function transitionToList() {
-		  self.get("routing").transitionTo("index");
+		  self.get("routing").transitionTo("recipes.index");
 		}
 		function failure(reason) {
 		  console.log(reason);
