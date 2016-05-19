@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <ul class="recipe-filter-block list-inline clearfix">
         	<li><i class="fa fa-search"></i></li>
         	<li>{{input value=query class="form-control input-sm"}}</li>
@@ -41,11 +41,13 @@
 								<div class="col-md-6">
 	                    			<div class="recipe-list-desc">
 				                        <div class="icon-list">
-				                            <a href="#" class="btn btn-classic btn-skin" >
-				                            	<span class="icon-pin">
-				                            	</span>
+				                            <a href="#" class="btn btn-classic btn-skin" {{action "toggleBookmark" recipe}} >
+				                            	<i class="icon-pin"></i> {{ if recipe.bookmarked "Retirer des" "Ajouter aux" }} favoris
 				                            </a>
-				                            <a href="#" class="btn btn-skin" >Voir</a>
+				                            {{!-- <a href="#" class="btn btn-skin" }}>Voir</a> --}}
+				                            {{#link-to "recipes.show" recipe.id class="btn btn-skin"}}
+				                            	Voir
+				                            {{/link-to}}
 				                        </div>
 				                    </div>  
 	                    		</div>
@@ -78,24 +80,53 @@
         {{/if}}
     </div>
 
-    <div class="col-md-3 col-md-offset-1 recipe-filter-by">
-        <div class="sidebar-widget">
-            <h3>Ingrédient</h3>
-            <ul class="list-unstyled">
-            	<li><a href="#" {{ action "erasedFilterByElement"}}>Supprimer le filtre</a></li>
-                {{#each elements as |elem|}}
-                	<li class="{{if (is-equal filterByElementId elem.id) 'active' ''}}"><a href="#" {{ action "filterByElementId" elem.id}}>{{elem.name}} ({{elem.nb}}) </a></li>
-        		{{/each}} 
-            </ul>
-        </div>
-        <div class="sidebar-widget">
-            <h3>Type de recette</h3>
-            <ul class="list-unstyled">
-            	<li><a href="#" {{ action "erasedFilterByType"}}>Supprimer le filtre</a></li>
-            	{{#each types as |type|}}
-                	<li class="{{if (is-equal filterByType type.name) 'active' ''}}"><a href="#" {{ action "filterByType" type.name}}>{{type.name}} ({{type.nb}})</a></li>
-        		{{/each}}
-            </ul>
-        </div>        
+    <div class="col-md-3 recipe-filter-by">
+		{{#if showFilterBookmarked}}
+	        <div class="sidebar-widget">
+	            <h3>Filter</h3>
+	            <ul class="list-unstyled">
+                	<li class="{{if filterByBookmarked 'active' ''}}">
+                		<a href="#" {{ action "filterByBookmarked"}}>
+                			Bookmarked ({{bookmarks.nb}})
+                		</a>
+                	</li>
+	        		{{#if filterByBookmarked}}
+	        			<li class="text-right">
+	        				<a href="#" class="btn btn-skin btn-xs btn-classic" {{ action "erasedFilterByBookmarked"}}>Supprimer les filtres</a>
+	        			</li>
+	        		{{/if}}
+	            </ul>
+	        </div>          
+        {{/if}}            
+    	{{#if showFilterElement}}
+	        <div class="sidebar-widget">
+	            <h3>Ingrédient</h3>
+	            <ul class="list-unstyled">
+	                {{#each elements as |elem|}}
+	                	<li class="{{if (is-contains filterByElementId elem.id) 'active' ''}}"><a href="#" {{ action "filterByElementId" elem.id}}>{{elem.name}} ({{elem.nb}}) </a></li>
+	        		{{/each}} 
+	            	{{#if filterByElementId}}
+	            		<li class="text-right">
+	            			<a href="#" class="btn btn-skin btn-xs btn-classic" {{ action "erasedFilterByElement"}}>Supprimer les filtres</a>
+	            		</li>
+	            	{{/if}}        		
+	            </ul>
+	        </div>    	
+    	{{/if}}
+        {{#if showFilterType}}
+	        <div class="sidebar-widget">
+	            <h3>Type de recette</h3>
+	            <ul class="list-unstyled">
+	            	{{#each types as |type|}}
+	                	<li class="{{if (is-equal filterByType type.name) 'active' ''}}"><a href="#" {{ action "filterByType" type.name}}>{{type.name}} ({{type.nb}})</a></li>
+	        		{{/each}}
+	        		{{#if filterByType}}
+	        			<li class="text-right">
+	        				<a href="#" class="btn btn-skin btn-xs btn-classic" {{ action "erasedFilterByType"}}>Supprimer les filtres</a>
+	        			</li>
+	        		{{/if}}
+	            </ul>
+	        </div>          
+        {{/if}}
     </div>
 </div>

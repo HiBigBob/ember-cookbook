@@ -1,11 +1,15 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	filterByElementId: '',
+	store: Ember.inject.service(),
+	bookmark: Ember.inject.service('service-bookmark'),
+	filterByElementId: [],
 	filterByType: '',
+	filterByBookmarked: false,
 	sortedRecipes: Ember.computed.sort('listRecipes', 'sortDefinition'),
   	sortBy: 'date', 
 	reverseSort: true,
+	refresh: false,
 	sortDefinition: Ember.computed('sortBy', 'reverseSort', function() {
 	  	let sortOrder = this.get('reverseSort') ? 'desc' : 'asc';
 	  	return [ `${this.get('sortBy')}:${sortOrder}` ];
@@ -13,11 +17,20 @@ export default Ember.Component.extend({
 	showPagination: Ember.computed('sortedRecipes', function() {
 		return this.get('sortedRecipes').length > 10 ? true : false;
 	}),
+	showFilterType: Ember.computed('types', function() {
+		return this.get('types').length > 0 ? true : false;
+	}),
+	showFilterElement: Ember.computed('elements', function() {
+		return this.get('elements').length > 0 ? true : false;
+	}),
+	showFilterBookmarked: Ember.computed('bookmarks', 'refresh', function() {
+		return this.get('bookmarks').nb > 0 ? true : false;
+	}),
 	filterBy: '',
 
 	_queryChanged: Ember.observer('query', function() {
 		Ember.run.debounce(this, function() {
-			if (this.get('query').length > 2) {
+			if (this.get('query').length > 1) {
 				this.set('filterBy', this.get('query'));
 			} else {
 				this.set('filterBy', '');
@@ -25,16 +38,13 @@ export default Ember.Component.extend({
 		}, 200);
 	}),
 
-	listRecipes: Ember.computed('recipes', 'filterByElementId', 'filterByType', 'filterBy', function(){
+	listRecipes: Ember.computed('recipes', 'filterByElementId.[]', 'filterByType', 'filterBy', 'filterByBookmarked', function(){
 		let recipes = this.get('recipes');
 		let elementId = this.get('filterByElementId');
 		let type = this.get('filterByType');
-		let filter = this.get('filterBy');		
+		let filter = this.get('filterBy');
+		let bookmarked = this.get('filterByBookmarked');
 		let results = [];
-
-		if (Ember.isEmpty(elementId) && Ember.isEmpty(type)) {
-			return recipes;
-		}
 
 		if (!Ember.isEmpty(filter)) {
 		    recipes = recipes.filter(function(recipe){
@@ -42,18 +52,25 @@ export default Ember.Component.extend({
 		    });
 		}
 
-		if (!Ember.isEmpty(elementId)) {
+		if (Ember.isBlank(elementId) && Ember.isEmpty(type)  && !bookmarked) {
+			return recipes;
+		}
+
+		// Filter on element
+		if (!Ember.isBlank(elementId)) {
 			recipes.forEach(function(recipe, index, recipes) {
-				recipe.get('element').forEach(function(elem) {
-					if (!Ember.isEmpty(elem._element) && !Ember.isEmpty(elem._element.name)) {
-						if (elem._element._id === elementId) {
-							results.pushObject(recipes.objectAt(index));	
-						}
-					}
+				let tests = elementId.every(function(elem) {
+					let test = recipe.get('element').findBy('_element._id', elem);
+					return !Ember.isBlank(test);
 				});
+
+				if (tests) {
+					results.pushObject(recipe);	
+				}
 			});
 		}
 
+		// Filter on type of recipes
 		if (!Ember.isEmpty(type)) {
 			if (!Ember.isEmpty(elementId)) {
 				results.forEach(function(recipe, index, recipes) {
@@ -64,6 +81,23 @@ export default Ember.Component.extend({
 			} else {
 				recipes.forEach(function(recipe) {
 					if (recipe.get('type') === type) {
+						results.pushObject(recipe);	
+					}
+				});
+			}
+		}
+
+		// Filter on bookmarked recipes
+		if (bookmarked) {
+			if (!Ember.isEmpty(elementId) || !Ember.isEmpty(type)) {
+				results.forEach(function(recipe, index, recipes) {
+					if (recipe.get('bookmarked') !== bookmarked) {
+						recipes.removeAt(index);
+					}
+				});
+			} else {
+				recipes.forEach(function(recipe) {
+					if (recipe.get('bookmarked') === bookmarked) {
 						results.pushObject(recipe);	
 					}
 				});
@@ -126,12 +160,28 @@ export default Ember.Component.extend({
 		return types;
 	}),
 
+	bookmarks: Ember.computed('listRecipes', 'refresh', function(){
+		let recipes = this.get('listRecipes');
+		let bookmarks = {
+			nb: 0
+		};
+		if (!Ember.isEmpty(recipes)) {
+			recipes.forEach(function(recipe) {
+				if (!Ember.isEmpty(recipe.get('bookmarked')) && recipe.get('bookmarked')) {
+					bookmarks.nb++;	
+				}
+			});
+		}
+
+		return bookmarks;
+	}),	
+
 	actions: {
 		filterByElementId(id) {
-			if (!Ember.isEqual(this.get('filterByElementId'), id)) {
-				this.set('filterByElementId', id);
+			if (!this.get('filterByElementId').contains(id)) {
+				this.get('filterByElementId').pushObject(id);
 			} else {
-				this.set('filterByElementId', '');
+				this.get('filterByElementId').removeObject(id);
 			}
 		},
 
@@ -142,6 +192,10 @@ export default Ember.Component.extend({
 				this.set('filterByType', '');
 			}
 		},
+
+		filterByBookmarked() {
+			this.toggleProperty('filterByBookmarked');
+		},		
 
 		sortByField(field) {
 			if (!Ember.isEqual(this.get('sortBy'), field)) {
@@ -161,6 +215,15 @@ export default Ember.Component.extend({
 
 		erasedFilterByType() {
 			this.set('filterByType', '');
+		},
+
+		erasedFilterByBookmarked() {
+			this.set('filterByBookmarked', false);
+		},
+
+		toggleBookmark(recipe) {
+			this.get('bookmark').toggleBookmark(recipe);
+			this.set('refresh', !this.get('refresh'));
 		}
 	}
 
