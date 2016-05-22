@@ -1,0 +1,59 @@
+<div class="row single-product">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 margin-b-30">
+            	<div class="lg-img type-{{recipe.type}}">
+            		
+            	</div>     	
+            	<div class="space-20"></div>
+            	<a href="#" class="btn btn-classic btn-skin" {{action "toggleBookmark" recipe}} >
+                	<i class="icon-pin"></i> {{ if recipe.bookmarked "Retirer des" "Ajouter aux" }} favoris
+                </a>
+            </div>
+            <div class="col-md-7">
+            	<div class="row">
+					<div class="col-md-3 margin-b-30">
+            			<h3 class="title">
+            				{{#link-to "recipes.index"}}
+								<i class="fa fa-arrow-circle-left fa-1x" aria-hidden="true"></i>
+							{{/link-to}}     
+            				{{ recipe.name }}
+            			</h3>
+            		</div>
+            		<div class="col-md-3 margin-b-30">
+            			<span class="making avatar-preparation"> {{ recipe.minute }} minutes</span>
+            		</div>
+            		<div class="col-md-3 margin-b-30">
+            			<span class="baking avatar-cuisson"> {{ recipe.degree }} ° C</span>
+            		</div>
+            		<div class="col-md-3 margin-b-30">
+            			{{display-rating rating=recipe.score}}
+            		</div>
+            	</div>
+            	<div class="row">
+            		<div class="col-md-6 margin-b-30">
+            			<div class="row form-group">
+            				<div class="col-sm-1">
+            				</div>
+							<div class="col-sm-11 list-unstyled">
+								<h3>Ingrédient</h3>
+								<ul class="padding-8">
+							    {{#each recipe.element as |element|}}
+										<li>
+											{{ classify-element element.quantity element._measure.name element._element.name }} 
+										</li>
+								{{/each}} 
+								</ul>
+							</div>
+						</div>						
+            		</div>
+            		<div class="col-md-6 margin-b-30">
+            			<p>
+	                        {{mark-down recipe.description}}
+	                    </p>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+</div>
