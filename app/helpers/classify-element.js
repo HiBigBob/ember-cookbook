@@ -7,11 +7,14 @@ export function classifyElement(params/*, hash*/) {
 
 	if (!Ember.isEmpty(measure)) {
 		name = 'de ' + name;
+		if (quantity > 1) {
+			measure = measure + 's';
+		}
 	} else if (quantity	> 1 && quantity < 10) {
 		name = name+ 's';
 	}
 
-	return `${quantity} ${measure} ${name}`;
+	return `${quantity} ${measure.camelize()} ${name}`;
 }
 
 export default Ember.Helper.helper(classifyElement);
