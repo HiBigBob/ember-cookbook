@@ -2,7 +2,8 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800);
 body {
   font-family: "Arimo", sans-serif;
-  color: #aeaeae;
+  /*color: #aeaeae;*/
+  color: #777;
   background-color: #f5f5f5;
   font-size: 13px;
   line-height: 22px;
@@ -124,6 +125,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
 }
 
+.margin-b-10 {
+  margin-bottom: 10px;
+}
+
 del {
   color: #ef6464;
 }
@@ -184,7 +189,7 @@ del {
 
 /**breadcrumb**/
 .breadcrumb-wrapper {
-  padding: 20px 0;
+  padding: 15px 0;
   background-color: #57B984;
 }
 .breadcrumb-wrapper h1 {
@@ -194,6 +199,10 @@ del {
   font-weight: 600;
   /*text-shadow: 1px 2px #ccc;*/
   font-size: 18px;
+}
+
+.breadcrumb-wrapper h1 i {
+  padding-right: 10px;
 }
 
 /**header style**/
@@ -357,7 +366,7 @@ del {
   line-height: 20px;
   position: absolute;
   right: 0;
-  top: 5px;
+  top: -5px;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
@@ -389,13 +398,17 @@ del {
   position: relative;
   border-bottom: 1px dashed #eee;
 }
-.cart-item img {
+.cart-item .img {
   float: left;
-  width: 60px;
-  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  margin: 2px 10px 0px 5px;
 }
 .cart-item .description {
   overflow: hidden;
+  padding: 10px;
+  color: #777;
+  text-transform: capitalize;
 }
 .cart-item .description a {
   color: #333;
@@ -413,6 +426,7 @@ del {
   position: absolute;
   top: 5px;
   right: 10px;
+  padding: 7px;
 }
 .cart-item .buttons a {
   color: #999;
@@ -605,7 +619,7 @@ del {
   color: #eee;
 }
 .footer .tweet ul {
-  list-style: none;
+  sstyle: none;
   padding: 0px;
 }
 .footer .tweet ul li {
@@ -1096,81 +1110,79 @@ del {
   text-transform: uppercase;
 }
 
-.product-filter-block {
-  padding: 10px 20px;
+.recipe-filter-block {
+  padding: 3px 20px;
   margin-left: 0px;
-  margin-bottom: 40px;
-  background: #f5f5f5;
+  margin-bottom: 30px;
+  background: #fff;
 }
-.product-filter-block li.active a {
+.recipe-filter-block li.active a {
   color: #57B984;
 }
-.product-filter-block li a {
+.recipe-filter-block li a {
   display: block;
   color: #666;
   font-size: 13px;
   text-transform: uppercase;
   font-family: "Raleway", serif;
 }
-.product-filter-block li a:hover {
+.recipe-filter-block li a:hover {
   color: #57B984;
 }
 
-.product-list {
-  background: #f9f9f9;
-  padding: 10px 30px;
-  margin-bottom: 30px;
-  padding-top: 30px;
+.recipe-list {
+  background: #fff;
+  padding: 15px 20px 0px 30px;
+  margin-bottom: 10px;
 }
-.product-list .product-list-thumb {
-  border: 1px solid #ddd;
+.recipe-list .recipe-list-thumb {
+  /*border: 1px solid #ddd;*/
   background-color: #fff;
+  width: 75px;
+  height: 75px;
 }
-.product-list .product-list-thumb img {
+.recipe-list .recipe-list-thumb img {
   display: block;
   margin: 0 auto;
 }
-.product-list .product-list-desc {
-  padding-bottom: 30px;
+.recipe-list .recipe-list-desc {
+  /*padding-bottom: 30px;*/
 }
-.product-list .product-list-desc .title {
+.recipe-list .recipe-list-desc .title {
   color: #000;
   text-transform: uppercase;
   font-size: 15px;
 }
-.product-list .product-list-desc .price {
+.recipe-list .recipe-list-desc .baking,
+.recipe-list .recipe-list-desc .done,
+.recipe-list .recipe-list-desc .making {
   font-weight: 600;
   display: block;
   color: #666;
 }
-.product-list .product-list-desc .price del {
-  color: #999;
-  display: inline-block;
-  margin-right: 10px;
-}
-.product-list .product-list-desc .rating {
+.recipe-list .recipe-list-desc .rating {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
-.product-list .product-list-desc .rating a {
+.recipe-list .recipe-list-desc .rating a {
   color: #ef6464;
   display: inline-block;
   margin-left: 15px;
   font-size: 12px;
 }
-.product-list .product-list-desc .rating a:hover {
+.recipe-list .recipe-list-desc .rating a:hover {
   color: #999;
 }
-.product-list .product-list-desc .icon-list:after {
+.recipe-list .recipe-list-desc .icon-list:after {
   clear: both;
   content: "";
   display: table;
 }
-.product-list .product-list-desc .icon-list a {
+.recipe-list .recipe-list-desc .icon-list a {
   display: block;
   float: left;
 }
-.product-list .product-list-desc .icon-list a .fa-heart, .product-list .product-list-desc .icon-list a .fa-random {
+.recipe-list .recipe-list-desc .icon-list a .fa-heart, .recipe-list .recipe-list-desc .icon-list a .fa-random {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -1179,8 +1191,8 @@ del {
   margin-right: -1px;
   text-align: center;
 }
-.product-list .product-list-desc .icon-list .btn-skin {
-  margin-left: 20px;
+.recipe-list .recipe-list-desc .icon-list .btn-skin {
+  margin-right: 20px;
 }
 
 /**bootstrap pagination**/
@@ -1191,22 +1203,30 @@ del {
 
 /**sidebar**/
 .sidebar-widget {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 .sidebar-widget h3 {
   text-transform: uppercase;
   text-align: left;
   font-size: 15px;
   color: #000;
-  background-color: #f5f5f5;
+  background-color: #fff;
   padding: 10px 20px;
-  margin-bottom: 30px;
+  /*margin-bottom: 30px;*/
 }
 .sidebar-widget ul li {
   padding: 6px 0;
 }
 .sidebar-widget ul li a {
-  color: #999;
+  color: #777;
+}
+.sidebar-widget ul li.text-right a {
+  color: #fff;
+}
+.sidebar-widget ul .active {
+  color: #777;
+  font-weight: 800;
+  font-size: 15px;
 }
 .sidebar-widget .media .media-heading {
   font-weight: 400;
@@ -1603,6 +1623,14 @@ del {
   }
 }
 
+.padding-5 {
+  padding: 5px 0px;
+}
+
+.padding-8 {
+  padding: 8px 0px;
+}
+
 .padding-20 {
   padding: 20px 0px;
 }
@@ -1788,3 +1816,142 @@ del {
 .margin-right-5{
   margin-right: 5px!important;
 }
+
+.lg-img {
+  width: 250px;
+  height: 125px;
+}
+
+.type-apero {
+  background: url(../images/apero.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.xs-type-apero {
+  background: url(../images/apero.jpg);
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+
+.lg-type-apero {
+  background: url(../images/apero.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.type-entree {
+  background: url(../images/entree.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.xs-type-entree {
+  background: url(../images/entree.jpg);
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+
+.lg-type-entree {
+  background: url(../images/entree.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.type-plat {
+  background: url(../images/plat.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.xs-type-plat {
+  background: url(../images/plat.jpg);
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+
+.lg-type-plat {
+  background: url(../images/plat.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.type-desserts {
+  background: url(../images/dessert.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.lg-type-desserts {
+  background: url(../images/dessert.jpg);
+  background-size: 250px 125px;
+  background-repeat: no-repeat;
+}
+
+.xs-type-desserts {
+  background: url(../images/dessert.jpg);
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+}
+
+.recipe-filter-by ul {
+    list-style: none;
+    background-color: #fff;
+    padding: 5px 20px;
+}
+
+.avatar-user {
+  width: 25px;
+  height: 25px;
+  background: url(../images/chef.png);
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  margin: 15px 0px 0px 15px!important;
+}
+
+.avatar-pin {
+  width: 25px;
+  height: 25px;
+  background: url(../images/pin.png);
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  padding-right: 30px!important;
+  margin: 15px 20px 0px 15px!important;
+}
+
+.avatar-preparation {
+  background: url(../images/preparation.png);
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  padding-left: 25px!important;  
+}
+
+.avatar-cuisson {
+  background: url(../images/grill.png);
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  padding-left: 25px!important;  
+}
+
+.avatar-clock {
+  background: url(../images/alarm-clock.png);
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  padding-left: 20px!important;  
+}
+
+.icon-pin {
+  background: url(../images/pin-white.png);
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  padding-left: 20px!important;  
+}
+
+.ml-20 {
+  margin-left: 20px;
+}
+
+.list-unstyled ul {
+    list-style: none;
+}
+
