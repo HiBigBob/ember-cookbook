@@ -36,16 +36,25 @@
 							</div>
 						</div>	
 						<div class="row form-group">
-							<label for="inputEmail3" class="col-sm-3 control-label">Durée</label>
+							<label for="inputEmail3" class="col-sm-3 control-label">Durée de préparation</label>
 							<div class="col-sm-9">
 								<div class="input-group">
 									{{input value=recipe.object.minute class="form-control"}}
 									<span class="input-group-addon">minutes</span>
 								</div>
 							</div>
+						</div>
+						<div class="row form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label">Durée de cuisson</label>
+							<div class="col-sm-9">
+								<div class="input-group">
+									{{input value=recipe.object.baking class="form-control"}}
+									<span class="input-group-addon">minutes</span>
+								</div>
+							</div>
 						</div>							
 						<div class="row form-group">
-							<label for="inputEmail3" class="col-sm-3 control-label">Cuisson</label>
+							<label for="inputEmail3" class="col-sm-3 control-label">Température</label>
 							<div class="col-sm-9">
 								<div class="input-group">
 									{{input value=recipe.object.degree class="form-control"}}
