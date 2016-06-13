@@ -6,16 +6,35 @@ export default Ember.Component.extend({
 	filterByElementId: [],
 	filterByType: '',
 	filterByBookmarked: false,
-	sortedRecipes: Ember.computed.sort('listRecipes', 'sortDefinition'),
+	sortedRecipes: Ember.computed.sort('listsRecipes', 'sortDefinition'),
   	sortBy: 'date', 
 	reverseSort: true,
 	refresh: false,
+	offset: 0,
+	limit: 4,
+	nbResult: 0,
+	activePage: 0,
+	previousPage: 0,
+	nextPage: 1,
 	sortDefinition: Ember.computed('sortBy', 'reverseSort', function() {
 	  	let sortOrder = this.get('reverseSort') ? 'desc' : 'asc';
 	  	return [ `${this.get('sortBy')}:${sortOrder}` ];
 	}),
-	showPagination: Ember.computed('sortedRecipes', function() {
-		return this.get('sortedRecipes').length > 10 ? true : false;
+	showPagination: Ember.computed('nbResult', function() {
+		return this.get('nbResult') > this.get('limit') ? true : false;
+	}),
+	nbPage: Ember.computed('nbResult', function() {
+		let nbPage = Math.ceil(this.get('nbResult') / this.get('limit'));
+		let page = [];
+		
+		for (let i = 1; i <= nbPage; i++) { 
+		    page.push({
+		    	id: i - 1,
+		    	nb: i
+		   	});
+		}
+
+		return page;
 	}),
 	showFilterType: Ember.computed('types', function() {
 		return this.get('types').length > 0 ? true : false;
@@ -53,12 +72,13 @@ export default Ember.Component.extend({
 		}
 
 		if (Ember.isBlank(elementId) && Ember.isEmpty(type)  && !bookmarked) {
+			this.set('nbResult', recipes.get('length'));
 			return recipes;
 		}
 
 		// Filter on element
 		if (!Ember.isBlank(elementId)) {
-			recipes.forEach(function(recipe, index, recipes) {
+			recipes.forEach(function(recipe) {
 				let tests = elementId.every(function(elem) {
 					let test = recipe.get('element').findBy('_element._id', elem);
 					return !Ember.isBlank(test);
@@ -104,8 +124,16 @@ export default Ember.Component.extend({
 			}
 		}
 
+		this.set('nbResult', results.length);
 		return results;
 	}),	
+
+	listsRecipes: Ember.computed('listRecipes', 'offset', 'limit', function(){
+		let results = this.get('listRecipes');
+		let offset = this.get('offset');
+		let limit = this.get('limit');
+		return results.slice(offset, offset+limit);
+	}),
 
 	elements: Ember.computed('listRecipes', function(){
 		let recipes = this.get('listRecipes');
@@ -210,7 +238,7 @@ export default Ember.Component.extend({
 		},
 
 		erasedFilterByElement() {
-			this.set('filterByElementId', '');
+			this.set('filterByElementId', []);
 		},
 
 		erasedFilterByType() {
@@ -224,6 +252,14 @@ export default Ember.Component.extend({
 		toggleBookmark(recipe) {
 			this.get('bookmark').toggleBookmark(recipe);
 			this.set('refresh', !this.get('refresh'));
+		},
+
+		changePage(idPage) {
+			let offset = idPage * this.get('limit');
+			this.set('activePage', idPage);
+			this.set('previousPage', idPage > 0 ? idPage - 1 : 0);
+			this.set('nextPage', this.get('nbPage') === idPage ? 0 : idPage + 1);
+			this.set('offset', offset);
 		}
 	}
 
