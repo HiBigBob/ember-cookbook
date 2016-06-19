@@ -7,6 +7,7 @@ export default Ember.Service.extend({
 		name: '',
 		done: '',
 		minute: '',
+		baking: '',
 		degree: '',
 		score: '', 
 		type: '',
